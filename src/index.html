@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="/src/assets/images/favicon-32x32.png"
+      type="image/x-icon"
+    />
+    <title>Todo App</title>
+  </head>
+  <body>
+    <template class="task-template">
+      <li class="list__task">
+        <input type="checkbox" />
+        <label></label>
+        <input
+          type="image"
+          class="list__delete-task"
+          src="./assets/images/icon-cross.svg"
+          alt="delete the task"
+        />
+      </li>
+    </template>
+    <div class="container">
+      <header class="main-header">
+        <h1 class="main-header__title">TODO</h1>
+        <input
+          type="image"
+          class="theme-switcher"
+          src="./assets/images/icon-moon.svg"
+          alt="theme switcher"
+        />
+      </header>
+      <form class="new-task-form" action="#">
+        <label class="new-task-form__label visually-hidden" for="new-task">
+          Create a new todo task
+        </label>
+        <input
+          id="new-task"
+          class="new-task-form__input"
+          type="text"
+          placeholder="Create a new todo..."
+          autocomplete="off"
+        />
+      </form>
+      <div class="tasks">
+        <ul class="list">
+          <li class="list__task list__task--completed">
+            <input id="task-1" type="checkbox" />
+            <label for="task-1">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Cupiditate dolor velit itaque aspernatur exercitationem.
+              Dignissimos libero dolores saepe quibusdam, minima voluptas, eum
+              amet maiores praesentium distinctio voluptatem unde sit animi.
+              Possimus inventore atque ut sint nesciunt, sapiente id aut rerum
+              sequi fugit dignissimos fuga error incidunt nulla quaerat
+              recusandae omnis reiciendis aliquam doloremque beatae minima ipsa
+              commodi? Velit, facilis sint. Tenetur doloremque temporibus quae.
+              Corrupti sunt, animi esse totam rerum sint deserunt placeat ipsam
+              quam, enim tenetur? Id maiores dignissimos asperiores. Animi
+              doloribus tenetur minima corrupti mollitia corporis architecto
+              dicta.
+            </label>
+            <input
+              type="image"
+              class="list__delete-task"
+              src="./assets/images/icon-cross.svg"
+              alt="delete the task"
+            />
+          </li>
+          <li class="list__task">
+            <input id="task-2" type="checkbox" />
+            <label for="task-2">Jog around the park 3x</label>
+            <input
+              type="image"
+              class="list__delete-task"
+              src="./assets/images/icon-cross.svg"
+              alt="delete the task"
+            />
+          </li>
+          <li class="list__task">
+            <input type="checkbox" id="task-3" />
+            <label for="task-3">10 minutes meditation</label>
+            <input
+              type="image"
+              class="list__delete-task"
+              src="./assets/images/icon-cross.svg"
+              alt="delete the task"
+            />
+          </li>
+        </ul>
+        <div class="status">
+          <div class="status__count">5 items left</div>
+          <nav class="nav">
+            <ul class="nav__items">
+              <li>
+                <a
+                  href="#"
+                  class="nav__all nav__current"
+                  aria-label="show all tasks"
+                >
+                  All
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav__active" aria-label="show active tasks">
+                  Active
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="nav__completed"
+                  aria-label="show completed tasks"
+                >
+                  Completed
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- wrapper to adjust the focus ring in the desktop size  -->
+          <div class="clear-tasks-wrapper">
+            <button class="clear-completed-tasks">Clear completed</button>
+          </div>
+        </div>
+      </div>
+      <nav class="mobile-nav">
+        <ul class="nav__items">
+          <li>
+            <a
+              href="#"
+              class="nav__all nav__current"
+              aria-label="show all tasks"
+            >
+              All
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav__active" aria-label="show active tasks">
+              Active
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="nav__completed"
+              aria-label="show completed tasks"
+            >
+              Completed
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <footer class="footer">Drag and drop to reorder list</footer>
+    </div>
+  </body>
+</html>
