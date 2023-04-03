@@ -28,6 +28,7 @@ class App {
 
     this.tasks.push(newTask);
     listEl.append(taskEl);
+    this.updateTaskCount();
 
     // TODO: remove the console logs
     console.log('task added: ', newTask);
@@ -44,17 +45,42 @@ class App {
     // TODO: remove the console logs
     console.log('task toggled: ', task);
     console.dir(this.tasks);
+
+    this.updateTaskCount();
   }
 
-  removeTask() {}
+  removeTask(id) {
+    const index = this.tasks.findIndex((t) => t.id === id);
+    this.tasks.splice(index, 1);
 
-  removeCompleted() {}
+    const taskEl = document.getElementById(id);
+    taskEl.closest('.list__task').remove();
+
+    this.updateTaskCount();
+
+    // TODO: remove the console logs
+    console.log('task deleted of id:', id);
+    console.dir(this.tasks);
+  }
+
+  clearCompleted() {}
 
   displayAll() {}
 
   displayActive() {}
 
   displayCompleted() {}
+
+  updateTaskCount() {
+    const countEl = document.querySelector('.status__count');
+    const count = this.tasks.filter((t) => t.isCompleted === false).length;
+    if (count) {
+      countEl.textContent =
+        count > 1 ? `${count} items left` : `${count} item left`;
+    } else {
+      countEl.textContent = `0 item left`;
+    }
+  }
 
   save() {}
 }
@@ -77,7 +103,12 @@ formEl.addEventListener('submit', (e) => {
 });
 
 listEl.addEventListener('click', (e) => {
+  // toggle checkbox event
   if (e.target.getAttribute('type') === 'checkbox') {
     todoApp.toggleTask(e.target.id);
+  }
+  // delete task event
+  else if (e.target.className === 'list__delete-task') {
+    todoApp.removeTask(e.target.parentNode.querySelector('input').id);
   }
 });
