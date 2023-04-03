@@ -63,7 +63,24 @@ class App {
     console.dir(this.tasks);
   }
 
-  clearCompleted() {}
+  clearCompleted() {
+    this.tasks = this.tasks.filter((t) => {
+      if (t.isCompleted) {
+        const taskEl = document
+          .getElementById(t.id)
+          .closest('.list__task--completed');
+        taskEl.remove();
+
+        return false;
+      }
+
+      return true;
+    });
+
+    // TODO: remove the console logs
+    console.log('completed tasks are cleared');
+    console.dir(this.tasks);
+  }
 
   displayAll() {}
 
@@ -86,13 +103,14 @@ class App {
 }
 
 const formEl = document.querySelector('.new-task-form');
-const inputEl = document.querySelector('#new-task');
 const listEl = document.querySelector('.list');
+const clearEl = document.querySelector('.clear-completed-tasks');
 
 const todoApp = new App();
 
 formEl.addEventListener('submit', (e) => {
   e.preventDefault();
+  const inputEl = e.target.querySelector('#new-task');
   const task = inputEl.value.trim();
 
   if (task) {
@@ -111,4 +129,8 @@ listEl.addEventListener('click', (e) => {
   else if (e.target.className === 'list__delete-task') {
     todoApp.removeTask(e.target.parentNode.querySelector('input').id);
   }
+});
+
+clearEl.addEventListener('click', (e) => {
+  todoApp.clearCompleted();
 });
