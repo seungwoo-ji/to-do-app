@@ -16,18 +16,11 @@ class App {
 
   addTask(description) {
     const listEl = document.querySelector('.list');
-    const taskTemplateEl = document.querySelector('.task-template');
-    const taskEl = document.importNode(taskTemplateEl.content, true);
-
     const newTask = new Task(description);
-    const taskInputEl = taskEl.querySelector('input');
-    taskInputEl.id = newTask.id;
-    const taskLabelEl = taskEl.querySelector('label');
-    taskLabelEl.htmlFor = newTask.id;
-    taskLabelEl.textContent = newTask.description;
+    const newTaskEl = this.#createTask(newTask);
 
     this.tasks.push(newTask);
-    listEl.append(taskEl);
+    listEl.append(newTaskEl);
     this.#updateTaskCount();
 
     // TODO: remove the console logs
