@@ -85,7 +85,17 @@ class App {
     console.dir(this.tasks);
   }
 
-  displayActive() {}
+  displayActive() {
+    const listEl = document.querySelector('.list');
+    const taskEls = this.tasks
+      .filter((t) => !t.isCompleted)
+      .map((t) => this.#createTask(t));
+    listEl.replaceChildren(...taskEls);
+
+    // TODO: remove the console logs
+    console.log('display all tasks');
+    console.dir(this.tasks);
+  }
 
   displayCompleted() {}
 
@@ -160,5 +170,7 @@ navEl.addEventListener('click', (e) => {
   console.log(e.target);
   if (e.target.classList.contains('nav__all')) {
     todoApp.displayAll();
+  } else if (e.target.classList.contains('nav__active')) {
+    todoApp.displayActive();
   }
 });
