@@ -177,7 +177,9 @@ clearEl.addEventListener('click', (e) => {
 });
 
 navEl.addEventListener('click', (e) => {
-  console.log(e.target);
+  navEl.querySelector('.nav__current').classList.remove('nav__current');
+  e.target.classList.add('nav__current');
+
   if (e.target.classList.contains('nav__completed')) {
     todoApp.displayCompleted();
   } else if (e.target.classList.contains('nav__active')) {
