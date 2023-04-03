@@ -93,11 +93,21 @@ class App {
     listEl.replaceChildren(...taskEls);
 
     // TODO: remove the console logs
-    console.log('display all tasks');
+    console.log('display active tasks');
     console.dir(this.tasks);
   }
 
-  displayCompleted() {}
+  displayCompleted() {
+    const listEl = document.querySelector('.list');
+    const taskEls = this.tasks
+      .filter((t) => t.isCompleted)
+      .map((t) => this.#createTask(t));
+    listEl.replaceChildren(...taskEls);
+
+    // TODO: remove the console logs
+    console.log('display completed tasks');
+    console.dir(this.tasks);
+  }
 
   #createTask(task) {
     const taskTemplateEl = document.querySelector('.task-template');
@@ -168,9 +178,11 @@ clearEl.addEventListener('click', (e) => {
 
 navEl.addEventListener('click', (e) => {
   console.log(e.target);
-  if (e.target.classList.contains('nav__all')) {
-    todoApp.displayAll();
+  if (e.target.classList.contains('nav__completed')) {
+    todoApp.displayCompleted();
   } else if (e.target.classList.contains('nav__active')) {
     todoApp.displayActive();
+  } else {
+    todoApp.displayAll();
   }
 });
