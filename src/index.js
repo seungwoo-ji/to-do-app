@@ -28,7 +28,7 @@ class App {
 
     this.tasks.push(newTask);
     listEl.append(taskEl);
-    this.updateTaskCount();
+    this.#updateTaskCount();
 
     // TODO: remove the console logs
     console.log('task added: ', newTask);
@@ -46,7 +46,7 @@ class App {
     console.log('task toggled: ', task);
     console.dir(this.tasks);
 
-    this.updateTaskCount();
+    this.#updateTaskCount();
   }
 
   removeTask(id) {
@@ -56,7 +56,7 @@ class App {
     const taskEl = document.getElementById(id);
     taskEl.closest('.list__task').remove();
 
-    this.updateTaskCount();
+    this.#updateTaskCount();
 
     // TODO: remove the console logs
     console.log('task deleted of id:', id);
@@ -82,13 +82,40 @@ class App {
     console.dir(this.tasks);
   }
 
-  displayAll() {}
+  displayAll() {
+    const listEl = document.querySelector('.list');
+    const taskEls = this.tasks.map((t) => this.#createTask(t));
+    listEl.replaceChildren(...taskEls);
+
+    // TODO: remove the console logs
+    console.log('display all tasks');
+    console.dir(this.tasks);
+  }
 
   displayActive() {}
 
   displayCompleted() {}
 
-  updateTaskCount() {
+  #createTask(task) {
+    const taskTemplateEl = document.querySelector('.task-template');
+    const taskEl = document.importNode(taskTemplateEl.content, true);
+    const taskListEl = taskEl.querySelector('li');
+    const taskInputEl = taskEl.querySelector('input');
+    const taskLabelEl = taskEl.querySelector('label');
+
+    taskInputEl.id = task.id;
+    taskLabelEl.htmlFor = task.id;
+    taskLabelEl.textContent = task.description;
+
+    if (task.isCompleted) {
+      taskListEl.classList.add('list__task--completed');
+      taskInputEl.checked = true;
+    }
+
+    return taskListEl;
+  }
+
+  #updateTaskCount() {
     const countEl = document.querySelector('.status__count');
     const count = this.tasks.filter((t) => t.isCompleted === false).length;
     if (count) {
@@ -99,12 +126,13 @@ class App {
     }
   }
 
-  save() {}
+  #save() {}
 }
 
 const formEl = document.querySelector('.new-task-form');
 const listEl = document.querySelector('.list');
 const clearEl = document.querySelector('.clear-completed-tasks');
+const navEl = document.querySelector('.nav__items');
 
 const todoApp = new App();
 
@@ -133,4 +161,11 @@ listEl.addEventListener('click', (e) => {
 
 clearEl.addEventListener('click', (e) => {
   todoApp.clearCompleted();
+});
+
+navEl.addEventListener('click', (e) => {
+  console.log(e.target);
+  if (e.target.classList.contains('nav__all')) {
+    todoApp.displayAll();
+  }
 });
