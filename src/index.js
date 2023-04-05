@@ -10,8 +10,7 @@ class Task {
 
 class App {
   constructor() {
-    // TODO: load saved tasks from the local storage
-    this.tasks = [];
+    this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
   }
 
   addTask(description) {
@@ -22,6 +21,7 @@ class App {
     this.tasks.push(newTask);
     listEl.append(newTaskEl);
     this.#updateTaskCount();
+    this.#save();
 
     // TODO: remove the console logs
     console.log('task added: ', newTask);
@@ -34,12 +34,12 @@ class App {
 
     const taskEl = document.getElementById(id);
     taskEl.closest('.list__task').classList.toggle('list__task--completed');
+    this.#updateTaskCount();
+    this.#save();
 
     // TODO: remove the console logs
     console.log('task toggled: ', task);
     console.dir(this.tasks);
-
-    this.#updateTaskCount();
   }
 
   removeTask(id) {
@@ -50,6 +50,7 @@ class App {
     taskEl.closest('.list__task').remove();
 
     this.#updateTaskCount();
+    this.#save();
 
     // TODO: remove the console logs
     console.log('task deleted of id:', id);
@@ -69,6 +70,8 @@ class App {
 
       return true;
     });
+
+    this.#save();
 
     // TODO: remove the console logs
     console.log('completed tasks are cleared');
@@ -139,7 +142,13 @@ class App {
     }
   }
 
-  #save() {}
+  #save() {
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+
+    // TODO: remove the console logs
+    console.log('saved the tasks');
+    console.dir(this.tasks);
+  }
 }
 
 const formEl = document.querySelector('.new-task-form');
