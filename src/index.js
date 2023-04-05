@@ -152,49 +152,50 @@ class App {
   }
 }
 
-const formEl = document.querySelector('.new-task-form');
-const listEl = document.querySelector('.list');
-const clearEl = document.querySelector('.clear-completed-tasks');
-const navEl = document.querySelector('.nav__items');
+window.addEventListener('DOMContentLoaded', () => {
+  const formEl = document.querySelector('.new-task-form');
+  const listEl = document.querySelector('.list');
+  const clearEl = document.querySelector('.clear-completed-tasks');
+  const navEl = document.querySelector('.nav__items');
+  const todoApp = new App();
 
-const todoApp = new App();
+  formEl.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const inputEl = e.target.querySelector('#new-task');
+    const task = inputEl.value.trim();
 
-formEl.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const inputEl = e.target.querySelector('#new-task');
-  const task = inputEl.value.trim();
+    if (task) {
+      todoApp.addTask(task);
+    }
 
-  if (task) {
-    todoApp.addTask(task);
-  }
+    inputEl.value = null;
+  });
 
-  inputEl.value = null;
-});
+  listEl.addEventListener('click', (e) => {
+    // toggle checkbox event
+    if (e.target.getAttribute('type') === 'checkbox') {
+      todoApp.toggleTask(e.target.id);
+    }
+    // delete task event
+    else if (e.target.className === 'list__delete-task') {
+      todoApp.removeTask(e.target.parentNode.querySelector('input').id);
+    }
+  });
 
-listEl.addEventListener('click', (e) => {
-  // toggle checkbox event
-  if (e.target.getAttribute('type') === 'checkbox') {
-    todoApp.toggleTask(e.target.id);
-  }
-  // delete task event
-  else if (e.target.className === 'list__delete-task') {
-    todoApp.removeTask(e.target.parentNode.querySelector('input').id);
-  }
-});
+  clearEl.addEventListener('click', (e) => {
+    todoApp.clearCompleted();
+  });
 
-clearEl.addEventListener('click', (e) => {
-  todoApp.clearCompleted();
-});
+  navEl.addEventListener('click', (e) => {
+    navEl.querySelector('.nav__current').classList.remove('nav__current');
+    e.target.classList.add('nav__current');
 
-navEl.addEventListener('click', (e) => {
-  navEl.querySelector('.nav__current').classList.remove('nav__current');
-  e.target.classList.add('nav__current');
-
-  if (e.target.classList.contains('nav__completed')) {
-    todoApp.displayCompleted();
-  } else if (e.target.classList.contains('nav__active')) {
-    todoApp.displayActive();
-  } else {
-    todoApp.displayAll();
-  }
+    if (e.target.classList.contains('nav__completed')) {
+      todoApp.displayCompleted();
+    } else if (e.target.classList.contains('nav__active')) {
+      todoApp.displayActive();
+    } else {
+      todoApp.displayAll();
+    }
+  });
 });
