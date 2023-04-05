@@ -11,6 +11,7 @@ class Task {
 class App {
   constructor() {
     this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    this.displayAll();
   }
 
   addTask(description) {
