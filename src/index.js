@@ -17,7 +17,7 @@ class App {
   addTask(description) {
     const listEl = document.querySelector('.list');
     const newTask = new Task(description);
-    const newTaskEl = this.#createTask(newTask);
+    const newTaskEl = this.#connectDrag(this.#createTask(newTask));
 
     this.tasks.push(newTask);
     listEl.append(newTaskEl);
@@ -81,7 +81,9 @@ class App {
 
   displayAll() {
     const listEl = document.querySelector('.list');
-    const taskEls = this.tasks.map((t) => this.#createTask(t));
+    const taskEls = this.tasks.map((t) =>
+      this.#connectDrag(this.#createTask(t))
+    );
     listEl.replaceChildren(...taskEls);
 
     // TODO: remove the console logs
@@ -93,7 +95,7 @@ class App {
     const listEl = document.querySelector('.list');
     const taskEls = this.tasks
       .filter((t) => !t.isCompleted)
-      .map((t) => this.#createTask(t));
+      .map((t) => this.#connectDrag(this.#createTask(t)));
     listEl.replaceChildren(...taskEls);
 
     // TODO: remove the console logs
@@ -105,7 +107,7 @@ class App {
     const listEl = document.querySelector('.list');
     const taskEls = this.tasks
       .filter((t) => t.isCompleted)
-      .map((t) => this.#createTask(t));
+      .map((t) => this.#connectDrag(this.#createTask(t)));
     listEl.replaceChildren(...taskEls);
 
     // TODO: remove the console logs
@@ -149,6 +151,35 @@ class App {
     // TODO: remove the console logs
     console.log('saved the tasks');
     console.dir(this.tasks);
+  }
+
+  #connectDrag(taskEl) {
+    taskEl.setAttribute('draggable', true);
+    taskEl.addEventListener('drag', this.#handleDrag);
+    taskEl.addEventListener('dragend', this.#handleDrop);
+
+    return taskEl;
+  }
+
+  #handleDrag(event) {
+    const draggedEl = event.target;
+    const listEl = draggedEl.parentNode;
+    const coordX = event.clientX;
+    const coordY = event.clientY;
+    const currentEl = document.elementFromPoint(coordX, coordY);
+
+    draggedEl.classList.add('dragging-task');
+
+    if (currentEl && currentEl.parentNode === listEl) {
+      listEl.insertBefore(draggedEl, currentEl.nextSibling);
+    }
+  }
+
+  #handleDrop(event) {
+    event.target.classList.remove('dragging-task');
+
+    // TODO: remove the console logs
+    console.log('dropped the task');
   }
 }
 
