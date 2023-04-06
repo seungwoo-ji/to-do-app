@@ -239,6 +239,11 @@ a {
   cursor: default;
 }
 
+.dragging-task {
+  border: 1px solid var(--light-purple);
+
+}
+
 /* Hide elements visually but keep them available to screen readers */
 /* https://make.wordpress.org/accessibility/handbook/markup/the-css-class-screen-reader-text/ */
 .visually-hidden {
