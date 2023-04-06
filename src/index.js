@@ -156,8 +156,8 @@ class App {
 
   #connectDrag(taskEl) {
     taskEl.setAttribute('draggable', true);
-    taskEl.addEventListener('drag', this.#handleDrag);
-    taskEl.addEventListener('dragend', this.#handleDrop);
+    taskEl.addEventListener('drag', this.#handleDrag.bind(this));
+    taskEl.addEventListener('dragend', this.#handleDrop.bind(this));
 
     return taskEl;
   }
@@ -172,15 +172,35 @@ class App {
     draggedEl.classList.add('dragging-task');
 
     if (currentEl && currentEl.parentNode === listEl) {
-      listEl.insertBefore(draggedEl, currentEl.nextSibling);
+      if (currentEl === draggedEl) return;
+
+      const draggedIndex = this.tasks.findIndex(
+        (t) => t.id === draggedEl.querySelector('input').id
+      );
+      const task = this.tasks.splice(draggedIndex, 1);
+      const currentIndex = this.tasks.findIndex(
+        (t) => t.id === currentEl.querySelector('input').id
+      );
+
+      // dragging the task upwards
+      if (draggedEl === currentEl.nextSibling) {
+        listEl.insertBefore(draggedEl, currentEl);
+        this.tasks.splice(currentIndex, 0, ...task);
+      }
+      // dragging the task downwards
+      else {
+        listEl.insertBefore(draggedEl, currentEl.nextSibling);
+        this.tasks.splice(currentIndex + 1, 0, ...task);
+      }
+
+      // TODO: remove the console logs
+      console.dir(this.tasks);
     }
   }
 
   #handleDrop(event) {
     event.target.classList.remove('dragging-task');
-
-    // TODO: remove the console logs
-    console.log('dropped the task');
+    this.#save();
   }
 }
 
