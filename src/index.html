@@ -11,7 +11,7 @@
     />
     <title>Todo App</title>
   </head>
-  <body>
+  <body class="dark-mode">
     <template class="task-template">
       <li class="list__task">
         <input type="checkbox" />
@@ -27,12 +27,7 @@
     <div class="container">
       <header class="main-header">
         <h1 class="main-header__title">TODO</h1>
-        <input
-          type="image"
-          class="theme-switcher"
-          src="./assets/images/icon-moon.svg"
-          alt="theme switcher"
-        />
+        <button class="theme-switcher" aria-label="theme switcher"></button>
       </header>
       <form class="new-task-form" action="#">
         <label class="new-task-form__label visually-hidden" for="new-task">
