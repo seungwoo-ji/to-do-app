@@ -116,6 +116,11 @@ class App {
     console.dir(this.tasks);
   }
 
+  toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+  }
+
   #createTask(task) {
     const taskTemplateEl = document.querySelector('.task-template');
     const taskEl = document.importNode(taskTemplateEl.content, true);
@@ -208,7 +213,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const formEl = document.querySelector('.new-task-form');
   const listEl = document.querySelector('.list');
   const clearEl = document.querySelector('.clear-completed-tasks');
-  const navEl = document.querySelector('.nav__items');
+  const navEls = document.querySelectorAll('.nav__items');
+  const themeEl = document.querySelector('.theme-switcher');
   const todoApp = new App();
 
   formEl.addEventListener('submit', (e) => {
@@ -238,16 +244,22 @@ window.addEventListener('DOMContentLoaded', () => {
     todoApp.clearCompleted();
   });
 
-  navEl.addEventListener('click', (e) => {
-    navEl.querySelector('.nav__current').classList.remove('nav__current');
-    e.target.classList.add('nav__current');
+  navEls.forEach((navEl) => {
+    navEl.addEventListener('click', (e) => {
+      navEl.querySelector('.nav__current').classList.remove('nav__current');
+      e.target.classList.add('nav__current');
 
-    if (e.target.classList.contains('nav__completed')) {
-      todoApp.displayCompleted();
-    } else if (e.target.classList.contains('nav__active')) {
-      todoApp.displayActive();
-    } else {
-      todoApp.displayAll();
-    }
+      if (e.target.classList.contains('nav__completed')) {
+        todoApp.displayCompleted();
+      } else if (e.target.classList.contains('nav__active')) {
+        todoApp.displayActive();
+      } else {
+        todoApp.displayAll();
+      }
+    });
+  });
+
+  themeEl.addEventListener('click', (e) => {
+    todoApp.toggleDarkMode();
   });
 });
