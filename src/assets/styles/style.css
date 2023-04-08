@@ -9,8 +9,40 @@
   --bright-blue: hsl(220, 98%, 61%);
   --light-purple: hsl(280, 87%, 65%);
   --light-blue: hsl(192, 100%, 67%);
+
+  /* variables */
+  --bg-primary: var(--very-light-gray);
+  --bg-secondary: white;
+  --border-color: var(--very-light-grayish-blue);
+  --placeholder-color: var(--dark-grayish-blue);
+  --line-through-color: var(--dark-grayish-blue);
+  --font-primary: var(--very-dark-grayish-blue);
+  --font-secondary: var(--light-grayish-blue);
+  --font-tertiary: var(--dark-grayish-blue);
+  --bg-image: url(/src/assets/images/bg-mobile-light.jpg);
+  --theme-icon: url(/src/assets/images/icon-moon.svg);
   --spacer: 1em 1.4em;
-  --checkbox-size: 1.5em
+  --checkbox-size: 1.5em;
+}
+
+.dark-mode {
+  --very-dark-blue: hsl(235, 21%, 11%);
+  --very-dark-desaturated-blue: hsl(235, 24%, 19%);
+  --light-grayish-blue: hsl(234, 39%, 85%);
+  --dark-grayish-blue: hsl(234, 11%, 52%);
+  --very-dark-grayish-blue: hsl(233, 14%, 35%);
+
+  /* variables */
+  --bg-primary: var(--very-dark-blue);
+  --bg-secondary: var(--very-dark-desaturated-blue);
+  --border-color: var(--very-dark-grayish-blue);
+  --placeholder-color: var(--dark-grayish-blue);
+  --line-through-color: var(--dark-grayish-blue);
+  --font-primary: var(--light-grayish-blue);
+  --font-secondary: var(--very-dark-grayish-blue);
+  --font-tertiary: var(--dark-grayish-blue);
+  --bg-image: url(/src/assets/images/bg-mobile-dark.jpg);
+  --theme-icon: url(/src/assets/images/icon-sun.svg);
 }
 
 *,
@@ -19,15 +51,18 @@
   box-sizing: border-box;
 }
 
-input {
-  font-size: inherit;
+input,
+button {
+  font: inherit;
 }
 
 body {
+  --font-size: 0.8rem;
   font-family: 'Josefin Sans', sans-serif;
-  background-image: url(/src/assets/images/bg-mobile-light.jpg);
+  font-size: var(--font-size);
+  background-image: var(--bg-image);
   background-position-x: center;
-  background-color: var(--very-light-gray);
+  background-color: var(--bg-primary);
   background-repeat: no-repeat;
   margin: 0;
   min-height: 100vh;
@@ -48,10 +83,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 1em 0;
 }
 
+/* There is a problem with the vertical metric of the given custom font which results  */
+/* in incorrect line height of the font in mac os. To solve this, refers to the following link */
+/* https://www.maxkohler.com/posts/2022-02-19-fixing-vertical-metrics/ */
 .main-header__title {
-  margin: 0.4em 0;
   font-weight: bold;
   color: white;
   letter-spacing: 0.5em;
@@ -59,16 +97,17 @@ body {
 }
 
 .theme-switcher {
-  font-size: inherit;
   width: 1.5em;
-  cursor: default;
+  height: 1.5em;
+  background: var(--theme-icon) center/contain no-repeat;
+  border: none;
+  padding: 0;
   transform: scale(1);
   transition: transform 300ms ease-in-out;
 }
 
 .theme-switcher:hover,
 .theme-switcher:focus {
-  color: var(--bright-blue);
   transform: scale(1.2);
 }
 
@@ -76,13 +115,13 @@ body {
   display: flex;
   align-items: center;
   border-radius: 5px;
-  background-color: white;
+  background-color: var(--bg-secondary);
   padding: var(--spacer);
 }
 
 .new-task-form::before {
   content: '';
-  border: 1px solid var(--light-grayish-blue);
+  border: 1px solid var(--border-color);
   border-radius: 50%;
   min-width: 1.5em;
   min-height: 1.5em;
@@ -90,18 +129,18 @@ body {
 }
 
 .new-task-form__input {
-  font: inherit;
+  color: var(--font-primary);
   border: none;
   background-color: transparent;
 }
 
 .new-task-form__input::placeholder {
   overflow: visible;
-  color: var(--dark-grayish-blue)
+  color: var(--placeholder-color);
 }
 
 .tasks {
-  background-color: white;
+  background-color: var(--bg-secondary);
   border-radius: 5px;
 }
 
@@ -114,9 +153,9 @@ body {
 .list__task {
   display: flex;
   align-items: center;
-  color: var(--very-dark-grayish-blue);
+  color: var(--font-primary);
   list-style: none;
-  border-bottom: 1px solid var(--light-grayish-blue);
+  border-bottom: 1px solid var(--border-color);
   padding: var(--spacer);
   gap: 1em;
 }
@@ -125,7 +164,7 @@ body {
 /* https://stackoverflow.com/questions/4148499/how-to-style-a-checkbox-using-css */
 .list__task:before {
   content: '';
-  border: 1px solid var(--light-grayish-blue);
+  border: 1px solid var(--border-color);
   border-radius: 50%;
   min-width: var(--checkbox-size);
   min-height: var(--checkbox-size);
@@ -138,12 +177,13 @@ body {
 
 .list__task:has(input[type="checkbox"]:focus):before,
 .list__task:has(input[type="checkbox"]:hover):before {
-  box-shadow: 0px 0px 0px 2px hsl(212, 99%, 40%)
+  outline: hsl(212, 99%, 40%) auto 1px;
+  outline-offset: 1px;
 }
 
 .list__task--completed {
-  color: var(--light-grayish-blue);
-  text-decoration: line-through;
+  color: var(--font-secondary);
+  text-decoration: line-through var(--line-through-color) 1.3px;
 }
 
 input[type="checkbox"] {
@@ -176,12 +216,17 @@ input[type="checkbox"] {
 .status {
   display: flex;
   justify-content: space-between;
-  color: var(--dark-grayish-blue);
+  align-items: center;
+  color: var(--font-tertiary);
   padding: var(--spacer);
 }
 
+.status__count,
 .clear-completed-tasks {
-  font: inherit;
+  font-size: 0.6rem;
+}
+
+.clear-completed-tasks {
   color: inherit;
   border: none;
   background-color: transparent;
@@ -191,7 +236,7 @@ input[type="checkbox"] {
 
 .clear-completed-tasks:focus,
 .clear-completed-tasks:hover {
-  color: var(--very-dark-grayish-blue);
+  color: var(--font-primary);
 }
 
 a {
@@ -204,7 +249,8 @@ a {
 }
 
 .mobile-nav {
-  background-color: white;
+  background-color: var(--bg-secondary);
+  border-radius: 5px;
   padding: var(--spacer);
 }
 
@@ -215,7 +261,7 @@ a {
   gap: 1em;
   padding: 0;
   margin: 0;
-  color: var(--dark-grayish-blue);
+  color: var(--font-tertiary);
   font-weight: 700;
 }
 
@@ -225,7 +271,7 @@ a {
 
 .nav__items a:focus,
 .nav__items a:hover {
-  color: var(--very-dark-grayish-blue);
+  color: var(--font-primary);
 }
 
 .nav__current {
@@ -235,13 +281,12 @@ a {
 .footer {
   margin-top: 2em;
   text-align: center;
-  color: var(--dark-grayish-blue);
+  color: var(--font-tertiary);
   cursor: default;
 }
 
 .dragging-task {
   border: 1px solid var(--light-purple);
-
 }
 
 /* Hide elements visually but keep them available to screen readers */
@@ -260,17 +305,25 @@ a {
 }
 
 @media (min-width: 376px) {
+  :root {
+
+    --bg-image: url(/src/assets/images/bg-desktop-light.jpg);
+  }
+
+  .dark-mode {
+
+    --bg-image: url(/src/assets/images/bg-desktop-dark.jpg);
+  }
+
   body {
-    font-size: 1.125rem;
-    background-image: url(/src/assets/images/bg-desktop-light.jpg);
+    --font-size: 1.125rem;
+    background-image: var(--bg-image);
+    font-size: var(--font-size);
   }
 
-  .main-header__title {
-    margin: 1.3em 0;
-  }
-
-  .status {
-    font-size: 0.9rem;
+  .status__count,
+  .clear-completed-tasks {
+    font-size: 0.8rem;
   }
 
   /* Align the navigation bar in the centre */
