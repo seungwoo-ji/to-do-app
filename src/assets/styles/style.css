@@ -130,6 +130,7 @@ body {
 
 .new-task-form__input {
   color: var(--font-primary);
+  flex: 1;
   border: none;
   background-color: transparent;
 }
@@ -194,10 +195,14 @@ input[type="checkbox"] {
   margin: 0;
 }
 
+input[type="checkbox"]+label {
+  flex: 1;
+}
+
+
 .list__delete-task {
   opacity: 0;
   width: 0.7em;
-  margin-left: auto;
   transform: scale(1.0);
   transition: transform 300ms ease-in-out;
   cursor: default;
