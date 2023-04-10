@@ -5,6 +5,7 @@ A simple to-do list using vanilla JavaScript, CSS, and HTML
 ## Table of contents
 
 - [Overview](#overview)
+- [Getting started](#getting-started)
 - [Screenshot](#screenshot)
 - [Links](#links)
 - [Built with](#built-with)
@@ -25,6 +26,13 @@ Users should be able to:
 - Toggle light and dark mode
 - Drag and drop to reorder items on the list
 - Save the chosen theme and the tasks on the local storage
+
+## Getting Started
+
+```bash
+npm start # start the application in development mode
+npm build # bundle the application using Webpack
+```
 
 ## Screenshot
 
