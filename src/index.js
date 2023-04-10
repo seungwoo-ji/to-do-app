@@ -135,6 +135,7 @@ class App {
     taskEl.setAttribute('draggable', true);
     taskEl.addEventListener('drag', this.#handleDrag.bind(this));
     taskEl.addEventListener('dragend', this.#handleDrop.bind(this));
+    taskEl.addEventListener('dragover', (e) => e.preventDefault());
 
     return taskEl;
   }
