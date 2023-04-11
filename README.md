@@ -48,7 +48,7 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 
 ## Links
 
-- [Demo app](https://your-live-site-url.com)
+- [Demo app](https://poetic-kitsune-3bcd8b.netlify.app/)
 
 ## Built with
 
@@ -74,5 +74,5 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 
 Seung Woo (Paul) Ji
 
-- [LinkedIn]()
+- [LinkedIn](https://www.linkedin.com/in/seung-woo-paul-ji-8b697a193/)
 - [Frontend Mentor](https://www.frontendmentor.io/profile/seungwoo-ji)
